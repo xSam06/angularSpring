@@ -21,10 +21,7 @@
     </label>
 
 
-    <label>
-      Image (URL)
-      <input type="text" formControlName="imageUrl">
-    </label>
+    <input type="file" (change)="onFileSelected($event)">
 
     <button type="submit" [disabled]="projectGroup.invalid">
       Ajouter le projet

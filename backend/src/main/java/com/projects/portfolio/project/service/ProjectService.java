@@ -21,15 +21,13 @@ public class ProjectService {
 
     public ProjectResponse createProject(ProjectRequest request) {
 
-        // TEMPORAIRE (plus tard via JWT)
         User user = userRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Project project = Project.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .githubUrl(request.getGithubUrl())
-                .demoUrl(request.getDemoUrl())
+                .imageUrl(request.getImageUrl())
                 .createdAt(LocalDateTime.now())
                 .user(user)
                 .build();
@@ -40,20 +38,19 @@ public class ProjectService {
                 .id(project.getId())
                 .title(project.getTitle())
                 .description(project.getDescription())
-                .githubUrl(project.getGithubUrl())
-                .demoUrl(project.getDemoUrl())
+                .imageUrl(project.getImageUrl())
                 .build();
     }
 
     public List<ProjectResponse> getAllProjects() {
+
         return projectRepository.findAll()
                 .stream()
                 .map(p -> ProjectResponse.builder()
                         .id(p.getId())
                         .title(p.getTitle())
                         .description(p.getDescription())
-                        .githubUrl(p.getGithubUrl())
-                        .demoUrl(p.getDemoUrl())
+                        .imageUrl(p.getImageUrl()) //
                         .build())
                 .toList();
     }

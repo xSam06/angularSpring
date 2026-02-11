@@ -10,6 +10,5 @@ public class ProjectResponse {
     private Long id;
     private String title;
     private String description;
-    private String githubUrl;
-    private String demoUrl;
+    private String imageUrl;
 }

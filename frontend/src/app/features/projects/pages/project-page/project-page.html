@@ -13,12 +13,10 @@
           <article class="project-card">
 
             <!-- Image -->
-            <div class="project-image">
-              <img
-                src="https://via.placeholder.com/600x400"
-                alt="Image du projet {{ project.title }}"
-              />
-            </div>
+            <img
+              *ngIf="project.imageUrl"
+              [src]="'http://localhost:8081/' + project.imageUrl"
+              alt="Image projet">
 
             <!-- Contenu -->
             <div class="project-content">

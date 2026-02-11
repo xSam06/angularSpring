@@ -25,10 +25,10 @@ public class Project {
     @Column(length = 2000)
     private String description;
 
-    private String githubUrl;
-    private String demoUrl;
 
     private LocalDateTime createdAt;
+
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

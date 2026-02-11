@@ -14,12 +14,19 @@ export class AddProjectPage {
 
   //déclaration du groupe du formulaire
 
-  readonly projectGroup = new FormGroup({
+   projectGroup = new FormGroup({
     title: new FormControl('',{nonNullable : true,validators : [Validators.required]}),
     description: new FormControl('',{nonNullable : true}),
     url: new FormControl('',{nonNullable : true, validators : [Validators.required]}),
     imageUrl: new FormControl('',{nonNullable : true})
   });
+
+  //upload image
+  selectedFile!: File;
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 
 
   constructor(
@@ -29,24 +36,23 @@ export class AddProjectPage {
 
   submit() {
 
-    //On vérifie si le formulaire est valide selon les validators en place
-    if(this.projectGroup.valid){
+    if (this.selectedFile) {
 
-      //on pose une variable pour récupérer le JSON avec getRawValue()
-      const projectData = this.projectGroup.getRawValue();
+      this.projectService.uploadImage(this.selectedFile).subscribe(imagePath => {
 
-      //Dans ce cas soit on ajoute à la bdd soit on souleve une erreur
-
-      this.projectService.addProject(projectData).subscribe({
-        next: () => {
+        // On met à jour seulement imageUrl
+        this.projectGroup.patchValue({
+          imageUrl: imagePath
+        });
+        this.projectService.addProject(this.projectGroup.getRawValue()).subscribe(() => {
           this.router.navigate(['/projects']);
-        },
-        error: (err) => {
-          console.error('Erreur lors de l\'ajout :', err);
-        }
+        });
+
       });
+
     }
   }
+
 
 }
 
